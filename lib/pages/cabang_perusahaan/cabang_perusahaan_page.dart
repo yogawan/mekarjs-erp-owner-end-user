@@ -64,52 +64,151 @@ class _CabangPerusahaanPageState extends State<CabangPerusahaanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Cabang Perusahaan")),
+      backgroundColor: const Color(0xFFEEEEEE),
+      appBar: AppBar(
+        title: const Text("Cabang Perusahaan"),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: const Color(0xFFEEEEEE),
+      ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: branches.length,
-              itemBuilder: (context, index) {
-                final item = branches[index];
-
-                return Card(
-                  elevation: 3,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+          ? const Center(
+              child: CircularProgressIndicator(color: Color(0xFFFFBB00)),
+            )
+          : branches.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.store_outlined,
+                        size: 64,
+                        color: Colors.grey[400],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Tidak ada data cabang",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Padding(
+                )
+              : RefreshIndicator(
+                  color: const Color(0xFFFFBB00),
+                  onRefresh: fetchBranches,
+                  child: ListView.builder(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item["namaCabang"],
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text("Kode: ${item["kodeCabang"]}"),
-                        const SizedBox(height: 6),
-                        Text("Alamat: ${item["alamat"]}"),
-                        const SizedBox(height: 6),
-                        Text("Kontak: ${item["kontak"]}"),
-                        const SizedBox(height: 12),
-
-                        // Tombol buka maps
-                        ElevatedButton(
-                          onPressed: () => openMaps(item["googleMapsLink"]),
-                          child: const Text("Lihat Lokasi di Google Maps"),
-                        ),
-                      ],
-                    ),
+                    itemCount: branches.length,
+                    itemBuilder: (context, index) {
+                      final item = branches[index];
+                      return _buildBranchCard(item);
+                    },
                   ),
-                );
-              },
+                ),
+    );
+  }
+
+  Widget _buildBranchCard(dynamic item) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFBB00).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.store,
+                  color: Color(0xFFFFBB00),
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item["namaCabang"],
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Kode: ${item["kodeCabang"]}",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildInfoItem(Icons.location_on_outlined, item["alamat"]),
+          const SizedBox(height: 8),
+          _buildInfoItem(Icons.phone_outlined, item["kontak"]),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => openMaps(item["googleMapsLink"]),
+              icon: const Icon(Icons.map_outlined, size: 20),
+              label: const Text("Lihat Lokasi di Google Maps"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFFBB00),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                elevation: 0,
+              ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoItem(IconData icon, String text) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          size: 20,
+          color: Colors.grey[600],
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[800],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

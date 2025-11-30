@@ -61,47 +61,121 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        backgroundColor: Color(0xFFEEEEEE),
+        body: Center(child: CircularProgressIndicator(color: Color(0xFFFFBB00))),
+      );
     }
 
     if (profileData == null) {
       return const Scaffold(
+        backgroundColor: Color(0xFFEEEEEE),
         body: Center(child: Text("Tidak ada data profile")),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Profil Owner")),
+      backgroundColor: const Color(0xFFEEEEEE),
+      appBar: AppBar(
+        title: const Text("Profil Owner"),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: const Color(0xFFEEEEEE),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Nama: ${profileData!["nama"]}",
-              style: const TextStyle(fontSize: 18),
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: const Color(0xFFFFBB00),
+                child: Text(
+                  _getInitials(profileData!["nama"]),
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 8),
-
+            const SizedBox(height: 16),
             Text(
-              "Email: ${profileData!["email"]}",
-              style: const TextStyle(fontSize: 18),
+              profileData!["nama"],
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 8),
-
-            Text(
-              "Status: ${profileData!["isActive"] ? "Aktif" : "Tidak aktif"}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 8),
-
-            Text(
-              "Dibuat: ${profileData!["createdAt"]}",
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            const SizedBox(height: 24),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Informasi Akun",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildInfoRow("Email", profileData!["email"]),
+                  const SizedBox(height: 12),
+                  _buildInfoRow(
+                    "Status",
+                    profileData!["isActive"] ? "Aktif" : "Tidak aktif",
+                  ),
+                  const SizedBox(height: 12),
+                  _buildInfoRow("Dibuat", profileData!["createdAt"]),
+                ],
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  String _getInitials(String name) {
+    List<String> nameParts = name.trim().split(' ');
+    if (nameParts.length >= 2) {
+      return '${nameParts[0][0]}${nameParts[1][0]}'.toUpperCase();
+    } else if (nameParts.isNotEmpty) {
+      return nameParts[0][0].toUpperCase();
+    }
+    return 'U';
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }

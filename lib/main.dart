@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Pages
-import 'pages/main.dart'; // BNav
+import 'pages/main.dart';
 import 'pages/tanya_ai/tanya_ai_page.dart';
 import 'pages/keuangan/keuangan_page.dart';
 import 'pages/kepala_cabang/kepala_cabang_page.dart';
