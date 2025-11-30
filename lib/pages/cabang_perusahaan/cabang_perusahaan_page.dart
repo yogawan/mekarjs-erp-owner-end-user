@@ -73,6 +73,24 @@ class _CabangPerusahaanPageState extends State<CabangPerusahaanPage> {
         elevation: 0,
         backgroundColor: const Color(0xFFEEEEEE),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final result = await Navigator.pushNamed(context, "/create-cabang-perusahaan");
+          if (result == true) {
+            fetchBranches(); // Refresh list jika berhasil tambah
+          }
+        },
+        backgroundColor: const Color(0xFFFFBB00),
+        foregroundColor: Colors.white,
+        icon: const Icon(LucideIcons.plus),
+        label: const Text(
+          "Cabang Baru",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        elevation: 0,
+      ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(color: Color(0xFFFFBB00)),
@@ -114,78 +132,87 @@ class _CabangPerusahaanPageState extends State<CabangPerusahaanPage> {
   }
 
   Widget _buildBranchCard(dynamic item) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFBB00).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(24),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          "/detail-cabang-perusahaan",
+          arguments: item["_id"],
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFBB00).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const Icon(
+                    LucideIcons.store,
+                    color: Color(0xFFFFBB00),
+                    size: 24,
+                  ),
                 ),
-                child: const Icon(
-                  LucideIcons.store,
-                  color: Color(0xFFFFBB00),
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item["namaCabang"],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item["namaCabang"],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Kode: ${item["kodeCabang"]}",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
+                      const SizedBox(height: 4),
+                      Text(
+                        "Kode: ${item["kodeCabang"]}",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _buildInfoItem(LucideIcons.mapPin, item["alamat"]),
-          const SizedBox(height: 8),
-          _buildInfoItem(LucideIcons.phone, item["kontak"]),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: () => openMaps(item["googleMapsLink"]),
-              icon: const Icon(LucideIcons.map, size: 20),
-              label: const Text("Lihat Lokasi di Google Maps"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFFBB00),
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(99),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildInfoItem(LucideIcons.mapPin, item["alamat"]),
+            const SizedBox(height: 8),
+            _buildInfoItem(LucideIcons.phone, item["kontak"]),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => openMaps(item["googleMapsLink"]),
+                icon: const Icon(LucideIcons.map, size: 20),
+                label: const Text("Lihat Lokasi di Google Maps"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFFBB00),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                  elevation: 0,
                 ),
-                elevation: 0,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

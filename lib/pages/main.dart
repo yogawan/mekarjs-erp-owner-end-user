@@ -67,11 +67,11 @@ class _BNavState extends State<BNav> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(LucideIcons.store),
-                  label: "Cabang",
+                  label: "Kelola Cabang Perusahaan",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(LucideIcons.users),
-                  label: "Kepala Cabang",
+                  label: "Kelola Kepala Cabang",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(LucideIcons.user),
