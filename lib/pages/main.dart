@@ -4,6 +4,7 @@ import '../pages/tanya_ai/tanya_ai_page.dart';
 import '../pages/keuangan/keuangan_page.dart';
 import '../pages/kepala_cabang/kepala_cabang_page.dart';
 import '../pages/profile/profile_page.dart';
+import '../pages/cabang_perusahaan/cabang_perusahaan_page.dart';
 
 class BNav extends StatefulWidget {
   const BNav({super.key});
@@ -18,6 +19,7 @@ class _BNavState extends State<BNav> {
   final List<Widget> _pages = const [
     TanyaAiPage(),
     KeuanganPage(),
+    CabangPerusahaanPage(),
     KepalaCabangPage(),
     ProfilePage(),
   ];
@@ -47,6 +49,10 @@ class _BNavState extends State<BNav> {
           BottomNavigationBarItem(
             icon: Icon(Icons.payments_outlined),
             label: "Keuangan",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_tree_outlined),
+            label: "Cabang Perusahaan",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_tree_outlined),

@@ -1,8 +1,9 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Pages
-import 'pages/main.dart';                     // BNav
+import 'pages/main.dart'; // BNav
 import 'pages/tanya_ai/tanya_ai_page.dart';
 import 'pages/keuangan/keuangan_page.dart';
 import 'pages/kepala_cabang/kepala_cabang_page.dart';
@@ -22,25 +23,18 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      // Initial route (ubah sesuai kebutuhan)
       initialRoute: '/splash',
 
-      routes: {
-        // MAIN
-        '/': (context) => const BNav(),
+      theme: ThemeData(textTheme: GoogleFonts.playfairDisplayTextTheme()),
 
-        // SUB PAGES (Akses langsung)
+      routes: {
+        '/': (context) => const BNav(),
         '/tanya-ai': (context) => const TanyaAiPage(),
         '/keuangan': (context) => const KeuanganPage(),
         '/kepala-cabang': (context) => const KepalaCabangPage(),
         '/profile': (context) => const ProfilePage(),
-
-        // AUTH
         '/login': (context) => const LoginPage(),
         '/register': (context) => const CreateAccountPage(),
-
-        // SPLASH / LOADING
         '/splash': (context) => const SplashPage(),
       },
     );
