@@ -110,7 +110,7 @@ class _TanyaAiPageState extends State<TanyaAiPage> {
         backgroundColor: const Color(0xFFEEEEEE),
         leading: IconButton(
           icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => Navigator.pushReplacementNamed(context, "/"),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Column(
