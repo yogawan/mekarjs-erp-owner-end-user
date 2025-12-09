@@ -34,7 +34,11 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
 
-      theme: ThemeData(textTheme: GoogleFonts.playfairDisplayTextTheme()),
+      theme: ThemeData(
+        fontFamily: GoogleFonts.lora().fontFamily, // Set font default
+        textTheme: GoogleFonts.loraTextTheme(), // Semua text pakai Lora
+        useMaterial3: true, // Optional Material 3
+      ),
 
       routes: {
         '/': (context) => const BNav(),
@@ -46,11 +50,13 @@ class App extends StatelessWidget {
 
         // Tanya AI
         '/tanya-ai': (context) => const TanyaAiPage(),
-        
+
         // Cabang Perusahaan
         '/cabang-perusahaan': (context) => const CabangPerusahaanPage(),
-        '/create-cabang-perusahaan': (context) => const CreateCabangPerusahaanPage(),
-        '/detail-cabang-perusahaan': (context) => const DetailCabangPerusahaanPage(),
+        '/create-cabang-perusahaan': (context) =>
+            const CreateCabangPerusahaanPage(),
+        '/detail-cabang-perusahaan': (context) =>
+            const DetailCabangPerusahaanPage(),
 
         // Kepala Cabang
         '/kepala-cabang': (context) => const KepalaCabangPage(),
