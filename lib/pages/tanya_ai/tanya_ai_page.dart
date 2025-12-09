@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../constants/api.dart';
 
 class ChatMessage {
   final String text;
@@ -59,7 +58,7 @@ class _TanyaAiPageState extends State<TanyaAiPage> {
       final dio = Dio();
 
       final response = await dio.post(
-        "${Api.baseUrl}/api/owner/ai-llm",
+        "https://mekarjs-erp-core-service.yogawanadityapratama.com/api/owner/ai-llm",
         data: {"askToCoreQuarry": question},
         options: Options(
           headers: {

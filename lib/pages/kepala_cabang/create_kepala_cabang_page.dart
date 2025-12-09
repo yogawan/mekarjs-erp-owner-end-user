@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../constants/api.dart';
 
 class CreateKepalaCabangPage extends StatefulWidget {
   const CreateKepalaCabangPage({super.key});
@@ -41,7 +40,7 @@ class _CreateKepalaCabangPageState extends State<CreateKepalaCabangPage> {
       final dio = Dio();
 
       final response = await dio.get(
-        "${Api.baseUrl}/api/owner/branch",
+        "https://mekarjs-erp-core-service.yogawanadityapratama.com/api/owner/branch",
         options: Options(
           headers: {
             "Authorization": "Bearer $token",

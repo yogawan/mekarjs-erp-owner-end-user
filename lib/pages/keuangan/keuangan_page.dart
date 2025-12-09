@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../constants/api.dart';
 
 class KeuanganPage extends StatefulWidget {
   const KeuanganPage({super.key});
@@ -38,7 +37,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
       final dio = Dio();
 
       final response = await dio.get(
-        "${Api.baseUrl}/api/owner/finance",
+        "https://mekarjs-erp-core-service.yogawanadityapratama.com/api/owner/finance",
         options: Options(
           headers: {
             "Authorization": "Bearer $token",
@@ -115,63 +114,17 @@ class _KeuanganPageState extends State<KeuanganPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Ringkasan Keuangan",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Update: $timestamp",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 128),
                     // Net Profit Display
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFBB00).withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            LucideIcons.wallet,
-                            color: Color(0xFFFFBB00),
-                            size: 48,
-                          ),
+                    Center(
+                      child: Text(
+                        _formatRupiah(netProfit),
+                        style: const TextStyle(
+                          fontSize: 44,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFFBB00),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Net Profit",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                _formatRupiah(netProfit),
-                                style: const TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFFFBB00),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     const SizedBox(height: 32),
                     _buildFinanceCard(

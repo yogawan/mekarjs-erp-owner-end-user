@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../constants//api.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -25,7 +24,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       final dio = Dio();
 
       final response = await dio.post(
-        "${Api.baseUrl}/api/owner/account/register",
+        "https://mekarjs-erp-core-service.yogawanadityapratama.com/api/owner/account/register",
         data: {
           "nama": namaController.text.trim(),
           "email": emailController.text.trim(),

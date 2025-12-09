@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../../constants/api.dart';
 
 class KepalaCabangPage extends StatefulWidget {
   const KepalaCabangPage({super.key});
@@ -35,7 +34,7 @@ class _KepalaCabangPageState extends State<KepalaCabangPage> {
       final dio = Dio();
 
       final response = await dio.get(
-        "${Api.baseUrl}/api/owner/branch-manager",
+        "https://mekarjs-erp-core-service.yogawanadityapratama.com/api/owner/branch-manager",
         options: Options(
           headers: {
             "Authorization": "Bearer $token",
